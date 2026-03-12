@@ -101,3 +101,28 @@ if st.button("🔍 اعرض التوصيات"):
     with st.spinner("يحلل البيانات..."):
         tips = get_optimization_tips()
         st.info(tips)
+        st.divider()
+
+# القسم الخامس — Charts احترافية
+st.subheader("📉 تحليل الأداء عبر الزمن")
+
+import plotly.express as px
+
+# Chart 1 — ROAS عبر الزمن
+fig1 = px.line(
+    df, x="date", y="ROAS",
+    color="campaign_name",
+    title="ROAS عبر الزمن لكل حملة",
+    labels={"date": "التاريخ", "ROAS": "عائد الإنفاق", "campaign_name": "الحملة"}
+)
+st.plotly_chart(fig1, use_container_width=True)
+
+# Chart 2 — الإنفاق vs الإيراد
+fig2 = px.bar(
+    df.groupby("campaign_name")[["spend","revenue"]].sum().reset_index(),
+    x="campaign_name", y=["spend","revenue"],
+    title="الإنفاق مقابل الإيراد لكل حملة",
+    barmode="group",
+    labels={"campaign_name": "الحملة", "value": "المبلغ ($)"}
+)
+st.plotly_chart(fig2, use_container_width=True)
