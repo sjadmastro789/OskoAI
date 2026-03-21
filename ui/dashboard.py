@@ -165,4 +165,29 @@ if st.button("✍️ ولّد نسخ إعلانية", type="primary", use_contai
         st.success(generate_ad_copy(campaign_for_content))
 
 st.divider()
+
+# ── القسم 8: Budget Agent ──
+st.subheader("💰 Budget Agent — إدارة الميزانية")
+total_budget = st.number_input(
+    "أدخل ميزانيتك الإجمالية ($):",
+    min_value=1000, max_value=1000000, value=10000, step=1000
+)
+col_b1, col_b2, col_b3 = st.columns(3)
+with col_b1:
+    if st.button("💰 وزّع الميزانية", use_container_width=True):
+        with st.spinner("يحسب..."):
+            from agents.budget_agent import allocate_budget
+            st.success(allocate_budget(total_budget))
+with col_b2:
+    if st.button("📅 توقعات 3 أشهر", use_container_width=True):
+        with st.spinner("يتنبأ..."):
+            from agents.budget_agent import roi_forecast
+            st.info(roi_forecast(3))
+with col_b3:
+    if st.button("🔍 حملات تحتاج تحسين", use_container_width=True):
+        with st.spinner("يحلل..."):
+            from agents.budget_agent import optimize_underperforming
+            st.warning(optimize_underperforming())
+
+st.divider()
 st.caption("🤖 OskoAI v1.0 — Marketing Optimization Agent | Powered by Groq LLaMA 3.3 | Built with Streamlit")
