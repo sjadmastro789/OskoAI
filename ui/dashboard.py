@@ -190,4 +190,27 @@ with col_b3:
             st.warning(optimize_underperforming())
 
 st.divider()
+
+# ── القسم 9: Orchestrator Agent ──
+st.subheader("🎯 Orchestrator Agent — تقرير شامل")
+st.caption("الدماغ الرئيسي — يختار الأدوات المناسبة ويولّد تقرير متكامل")
+
+orchestrator_question = st.text_input(
+    "اسأل الـ Orchestrator:",
+    placeholder="مثال: أعطني تقرير شامل عن كل الحملات",
+    key="orchestrator_input"
+)
+
+if st.button("🎯 شغّل التقرير الشامل", type="primary", use_container_width=True):
+    if orchestrator_question:
+        with st.spinner("🧠 Orchestrator يحلل ويختار الأدوات..."):
+            from agents.orchestrator import run_orchestrator
+            result = run_orchestrator(orchestrator_question)
+            st.success("✅ التقرير الشامل:")
+            st.write(result["final_report"])
+            st.info(f"🔧 الأدوات المستخدمة: {', '.join(result['tools_used'])}")
+    else:
+        st.warning("⚠️ اكتب سؤالك أولاً!")
+
+st.divider()
 st.caption("🤖 OskoAI v1.0 — Marketing Optimization Agent | Powered by Groq LLaMA 3.3 | Built with Streamlit")
